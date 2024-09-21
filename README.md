@@ -1,3 +1,106 @@
+# Next.js with Docker for EasyPanel
+
+[![StandWithUkraine](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/badges/StandWithUkraine.svg)](https://github.com/vshymanskyy/StandWithUkraine) &nbsp; 
+[![Github Badge](https://img.shields.io/github/followers/digitalandyeu?label=@digitalandyeu&style=social)](https://www.github.com/digitalandyeu)
+
+Next.js starter with docker built for [EasyPanel](https://easypanel.io). 
+Built on official docker example with some additional fixes and improvements.
+**Supports all Next.js features!**
+
+- [EasyPanel config](https://easypanel.io/docs/quickstarts/nextjs) for safe, zero downtime **git deployments**
+- Utilizes next `standalone` output
+- Supports `public` directory and **images optimization**
+- Plugin `next-sitemap` implementation example
+- Custom `middleware.ts` example
+- Some **API routes** examples
+- **Dark mode** example components (draft) 
+
+## Local development
+
+If needed, you can create the `.env.local` file with the following content:
+
+```dotenv
+NEXT_PUBLIC_DOMAIN=localhost:3000
+NEXT_PUBLIC_URL=http://$NEXT_PUBLIC_DOMAIN
+```
+
+### Run in docker locally
+
+To build the docker image, then run the docker container, use the following commands:
+
+```bash
+docker build -t nextjs-docker .
+docker run -p 3000:3000 nextjs-docker
+```
+
+**Common issues** and solutions for MacOS M1 platform with docker desktop:
+
+```bash
+# Rebuild the image without cache
+docker build --no-cache -t nextjs-docker 
+
+# Fix permissions
+sudo chown -R $(whoami) ~/.docker
+```
+
+## EasyPanel configuration
+
+Short guide on how to configure next.js project for EasyPanel.
+
+### Deployment script
+
+Add the **Deployment Script** to your EasyPanel `Deployments` section.
+
+```bash
+cd /code
+npm install
+npm run build
+supervisorctl restart nextjs-server
+```
+
+### Start script
+Add the start script to your `Processes` section.
+
+Name: `nextjs-server`  
+Directory: `/code`  
+Command: `npm start`
+
+### Environment variables
+
+Add the following environment variables to your `Environment` section.
+
+```dotenv
+# https://nextjs.org/docs/app/building-your-application/configuring/environment-variables
+NEXT_PUBLIC_DOMAIN=digitalandy.eu
+```
+
+## Cheatsheet
+
+Other useful commands, for managing the Next.js server.
+
+### npm scripts
+
+```json
+{
+  "serve:old": "next start",
+  "clean": "[[ -d ./.next ]] && rm -rf ./.next || echo \".next directory not found\"",
+  "export:public": "[[ -d ./public ]] && cp -r ./public ./.next/standalone || echo \"public directory not found\"",
+  "export:static": "[[ -d ./.next/static ]] && cp -r ./.next/static ./.next/standalone/.next || echo \".next/static directory not found\"",
+  "export": "npm-run-all export:*"
+}
+```
+
+### Resources
+
+Read the official documentation for detailed information / explanations.  
+
+- [next.js docker example](https://github.com/vercel/next.js/blob/canary/examples/with-docker)
+- [EasyPanel next guide](https://easypanel.io/docs/quickstarts/nextjs)
+- [Next + docker](https://nextjs.org/docs/app/building-your-application/deploying#docker-image)
+- [standalone output](https://nextjs.org/docs/app/api-reference/next-config-js/output#automatically-copying-traced-files)
+
+---
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
