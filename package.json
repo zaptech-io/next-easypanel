@@ -12,6 +12,7 @@
     "type": "git",
     "url": "git+ssh://git@github.com/digitalandyeu/next-with-docker.git"
   },
+  "readme": "https://gist.github.com/andriilive/38e0c30ad0e68e01d0bfc5250998de50",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

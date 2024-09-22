@@ -7,7 +7,7 @@ Next.js starter with docker built for [EasyPanel](https://easypanel.io).
 Built on official docker example with some additional fixes and improvements.
 **Supports all Next.js features!**
 
-- [EasyPanel config](https://easypanel.io/docs/quickstarts/nextjs) for safe, zero downtime **git deployments**
+- [EasyPanel configuration guide](https://gist.github.com/andriilive/38e0c30ad0e68e01d0bfc5250998de50) step-by-step guide with screenshots. 
 - Utilizes next `standalone` output
 - Supports `public` directory and **images optimization**
 - Plugin `next-sitemap` implementation example
@@ -43,27 +43,11 @@ docker build --no-cache -t nextjs-docker
 sudo chown -R $(whoami) ~/.docker
 ```
 
-## EasyPanel configuration
+## EasyPanel configuration guide
 
-Short guide on how to configure next.js project for EasyPanel.
+Short guide for safe, zero downtime **git deployments** with EasyPanel. The **step-by-step guide with screenshots** is available 
 
-### Deployment script
-
-Add the **Deployment Script** to your EasyPanel `Deployments` section.
-
-```bash
-cd /code
-npm install
-npm run build
-supervisorctl restart nextjs-server
-```
-
-### Start script
-Add the start script to your `Processes` section.
-
-Name: `nextjs-server`  
-Directory: `/code`  
-Command: `npm start`
+👉🏻 [Next.js with Docker at EasyPanel gist](https://gist.github.com/andriilive/38e0c30ad0e68e01d0bfc5250998de50)
 
 ### Environment variables
 
@@ -71,14 +55,18 @@ Add the following environment variables to your `Environment` section.
 
 ```dotenv
 # https://nextjs.org/docs/app/building-your-application/configuring/environment-variables
-NEXT_PUBLIC_DOMAIN=digitalandy.eu
+NEXT_PUBLIC_DOMAIN=next.digitalandy.eu
+NEXT_PUBLIC_URL=https://$NEXT_PUBLIC_DOMAIN
+PORT=3000
 ```
+
+---
 
 ## Cheatsheet
 
 Other useful commands, for managing the Next.js server.
 
-### npm scripts
+**npm scripts** from `package.json`:
 
 ```json
 {
@@ -90,9 +78,7 @@ Other useful commands, for managing the Next.js server.
 }
 ```
 
-### Resources
-
-Read the official documentation for detailed information / explanations.  
+**Read** see official documentation for detailed information / explanations.  
 
 - [next.js docker example](https://github.com/vercel/next.js/blob/canary/examples/with-docker)
 - [EasyPanel next guide](https://easypanel.io/docs/quickstarts/nextjs)

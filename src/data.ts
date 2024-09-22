@@ -10,4 +10,6 @@ export const AUTHOR = {
   from: "Prague, Czech Republic",
 } as const
 
+export const SETUP_GUIDE_URL = package_json.readme
+
 export const GITHUB_URL = package_json.homepage
